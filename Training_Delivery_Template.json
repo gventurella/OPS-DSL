@@ -1,0 +1,85 @@
+{
+  "objects": [{
+    "application": "Local|FlightManager",
+    "name": "2.0",
+    "kind": "ApplicationVersion"
+  }, {
+    "applicationVersion": "Local|FlightManager/2.0",
+    "name": "FlightManager-Application-2",
+    "kind": "TestSource",
+    "parameters": {
+      "jvmParameters": "-Dtest.HOST=vm-db-vg",
+      "source_set": "integTest",
+      "branch": "master"
+    },
+    "type": "Import Test Suites",
+    "plugin": "Gradle Testing/1.4.0",
+    "endpoint": "Gradle",
+    "tags": ["JUnit"]
+  }, {
+    "applicationVersion": "Local|FlightManager/2.0",
+    "name": "FlightManager-Application",
+    "kind": "TestSource",
+    "parameters": {
+      "workspace": "Giuseppe V",
+      "testConfigurationType": "functionalApi,external,externalFunctionalMobile,followme,functionalGui,http,jmeter",
+      "project": "CDD_Bootcamp",
+      "isPublicReport": "true",
+      "type": "Test"
+    },
+    "type": "Import Test Suites",
+    "plugin": "BlazeMeter/3.5",
+    "endpoint": "Blazemeter",
+    "tags": ["JUnit"]
+  }, {
+    "version": "${ReleaseVersion}",
+    "applicationVersions": ["Local|FlightManager/2.0"],
+    "ownerParties": ["superuser@ca.com"],
+    "markAsDonePhaseName": "",
+    "runOnCreation": false,
+    "name": "${ReleaseName}",
+    "kind": "Release"
+  }, {
+    "release": "${ReleaseName}/${ReleaseVersion}",
+    "environments": ["Dev"],
+    "approvalGate": "AUTOMATIC",
+    "isApprovalRequired": false,
+    "skipTasksWithUnchangedApplications": false,
+    "name": "dev",
+    "kind": "Phase"
+  }, {
+    "phase": "${ReleaseName}/${ReleaseVersion}/dev",
+    "isDisabled": false,
+    "applicationVersions": ["Local|FlightManager/2.0"],
+    "isOnFailurePhaseEnabled": true,
+    "isSkipTaskOnFailure": false,
+    "name": "Deploy FlightManager App",
+    "kind": "Task",
+    "parameters": {
+      "tomcatContextPath": "dummy",
+      "packageGroup": "dummy",
+      "packageVersion": "1.0",
+      "packageArtifact": "dummy",
+      "buildNumber": "%FlightManager.last_successful_change%"
+    },
+    "type": "Deploy Artifact",
+    "plugin": "Tomcat/1.2",
+    "endpoint": "AUT Tomcat"
+  }, {
+    "tags": ["JUnit"],
+    "phase": "${ReleaseName}/${ReleaseVersion}/dev",
+    "isDisabled": false,
+    "applicationVersions": ["Local|FlightManager/2.0"],
+    "previousTasks": ["Deploy FlightManager App"],
+    "isOnFailurePhaseEnabled": true,
+    "isSkipTaskOnFailure": false,
+    "name": "FlightManager-Test",
+    "kind": "Task",
+    "parameters": {
+      "changeId": "%FlightManager.last_successful_change%",
+      "runOnlySubset": "false"
+    },
+    "type": "Run Adaptive Testing",
+    "plugin": "ADAPTIVE TESTING/1.1.1"
+  }]
+}
