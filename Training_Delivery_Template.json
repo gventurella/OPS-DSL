@@ -1,10 +1,10 @@
 {
   "objects": [{
-    "application": "Local|FlightManager",
-    "name": "2.0",
+    "application": "Local|${ApplicationName}",
+    "name": "${ApplicationVersion}",
     "kind": "ApplicationVersion"
   }, {
-    "applicationVersion": "Local|FlightManager/2.0",
+    "applicationVersion": "Local|${ApplicationName}/${ApplicationVersion}",
     "name": "FlightManager-Application-2",
     "kind": "TestSource",
     "parameters": {
@@ -17,7 +17,7 @@
     "endpoint": "Gradle",
     "tags": ["JUnit"]
   }, {
-    "applicationVersion": "Local|FlightManager/2.0",
+    "applicationVersion": "Local|${ApplicationName}/${ApplicationVersion}",
     "name": "FlightManager-Application",
     "kind": "TestSource",
     "parameters": {
@@ -33,7 +33,7 @@
     "tags": ["JUnit"]
   }, {
     "version": "${ReleaseVersion}",
-    "applicationVersions": ["Local|FlightManager/2.0"],
+    "applicationVersions": ["Local|${ApplicationName}/${ApplicationVersion}"],
     "ownerParties": ["superuser@ca.com"],
     "markAsDonePhaseName": "",
     "runOnCreation": false,
@@ -50,7 +50,7 @@
   }, {
     "phase": "${ReleaseName}/${ReleaseVersion}/dev",
     "isDisabled": false,
-    "applicationVersions": ["Local|FlightManager/2.0"],
+    "applicationVersions": ["Local|${ApplicationName}/${ApplicationVersion}"],
     "isOnFailurePhaseEnabled": true,
     "isSkipTaskOnFailure": false,
     "name": "Deploy FlightManager App",
@@ -69,7 +69,7 @@
     "tags": ["JUnit"],
     "phase": "${ReleaseName}/${ReleaseVersion}/dev",
     "isDisabled": false,
-    "applicationVersions": ["Local|FlightManager/2.0"],
+    "applicationVersions": ["Local|${ApplicationName}/${ApplicationVersion}"],
     "previousTasks": ["Deploy FlightManager App"],
     "isOnFailurePhaseEnabled": true,
     "isSkipTaskOnFailure": false,
